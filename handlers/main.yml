@@ -1,2 +1,9 @@
 ---
 # handlers file for openldap
+
+- name: Restart and enable slapd
+  systemd:
+    name: slapd
+    enabled: yes
+    daemon_reload: yes
+    state: restarted

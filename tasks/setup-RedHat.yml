@@ -1,0 +1,7 @@
+- name: Install redhat packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ redhat_packages }}"
+  notify: 
+    - Restart and enable slapd

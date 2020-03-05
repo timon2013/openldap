@@ -1,0 +1,27 @@
+- name: Generate hash for users
+  shell: "slappasswd -s {{ item.pass }}"
+  #no_log: true
+  register: opendldap_hash
+  loop: "{{ user_passwords }}"
+
+- name: Set facts
+  set_fact:
+    hash_item: "{{ item.stdout }}"
+  loop: "{{ opendldap_hash.results }}"
+  #no_log: true
+  register: opendldap_hash
+
+- name: make a hash list
+  set_fact:
+    opendistro_hash_item: "{{ opendldap_hash.results | map(attribute='ansible_facts.hash_item') | list }}"
+  #no_log: true
+
+- name: Set a password for the admin user
+  ldap_passwd:
+    dn: cn=root,dc=example,dc=com
+    passwd: "root"
+
+
+#ldap_attr – Add or remove LDAP attribute values
+#ldap_entry – Add or remove LDAP entries
+#ldap_passwd – Set passwords in LDAP

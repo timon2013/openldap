@@ -1,2 +1,12 @@
 ---
 # defaults file for openldap
+redhat_packages:
+  - openldap
+  - openldap-servers
+  - openldap-clients
+
+user_passwords:
+  - name: root
+    pass: root
+  - name: user1
+    pass: user1
